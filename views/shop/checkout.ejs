@@ -1,0 +1,46 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+    <!-- <link rel="stylesheet" href="/css/checkout.css"> -->
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <ul class="cart__item-list">
+                    <% products.forEach(p => { %>
+                        <li class="cart__item">
+                            <h1><%= p.productId.title %></h1>
+                            <h2>Quantity: <%= p.quantity %></h2>
+                        </li>
+                    <% }) %>
+                </ul>
+                <div class="centered">
+                    <h2>Price: <%= totalPrice %></h2>
+                </div>
+                <div class="centered">
+                    <form action="/create-order" method="POST">
+                        <script
+                        src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key="pk_test_51K9sVxEJQYX9kbo0BNrfeZt3QwgT1iEX3uqIomogHEbVyPcY9z4ZJUNR2m1hSsqLO6C2OCxnpMhUwQCWHPW0xbka00SPOgr0AL"
+                        data-amount="<%= totalPrice * 100 %>"
+                        data-name="Your Order"
+                        data-description="All the items you ordered"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-locale="auto"
+                        data-currency="usd">
+                        </script>
+                    </form>
+                    <!-- <button id="order-btn"class="btn">ORDER</button>
+                    <script src="https://js.stripe.com/v3/"></script>
+                    <script>
+                        var stripe = Stripe("pk_test_51K9sVxEJQYX9kbo0BNrfeZt3QwgT1iEX3uqIomogHEbVyPcY9z4ZJUNR2m1hSsqLO6C2OCxnpMhUwQCWHPW0xbka00SPOgr0AL");
+                        var orderBtn = document.getElementById('order-btn');
+                        orderBtn.addEventListener("click",()=>{
+                            stripe.redirectToCheckout({
+                                sessionId:'<=sessionId%>',
+                            });
+                        })
+                    </script> -->
+                </div>
+        </main>
+        <%- include('../includes/end.ejs') %>

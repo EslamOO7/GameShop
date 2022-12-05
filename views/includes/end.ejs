@@ -1,0 +1,33 @@
+    <!-- for make jquery usable-->
+    <script src="/js/jquery/jquery.min.js"></script> 
+    <!-- main js file -->
+    <script src="/js/main.js"></script>
+    <!-- for switching button -->
+    <script src="/js/bootstrap-switch.min.js"></script>
+
+    </script>
+    <script>
+        $('[name="admin"]').bootstrapSwitch();
+        $(document).ready(() => {
+            const Token= $('[name=_csrf]').val()
+            $('[name="admin"]').on('switchChange.bootstrapSwitch', function (e, data) {
+                const id = $(this).attr('data-ID');
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/switchUser",
+                    beforeSend: function(request) {request.setRequestHeader("XSRF-TOKEN", Token);;},
+                    data: { id: id, admin: data, },
+                    cache: false,
+                    success: function (data) {
+                        console.log(data);
+                    }
+                    // success: function (data) {
+                    //     toastr.success(`This User with ID ${data._id} Updated`);
+                    // },
+                })
+            })
+    })
+    </script>
+</body>
+
+</html>

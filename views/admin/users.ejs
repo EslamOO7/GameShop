@@ -1,0 +1,31 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/product.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+            <main>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Be-Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for( let user of users ) { %>
+                            <tr>
+                                <th scope="row"><%= user._id %> </th>
+                                <td><%= user.email %></td>
+                                <td><input data-ID="<%= user._id %> " type="checkbox"  name="admin" value="<%= csrfToken %>" ></td>
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="userId" value="<%= user._id %>">
+                                <a href="/admin/switchUser/<%= user._id %>" class="btn">Edit</a>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            </main>
+<%- include('../includes/end.ejs') %>
+<script src="/js/admin.js"></script>
